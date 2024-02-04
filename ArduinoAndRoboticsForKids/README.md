@@ -11,7 +11,7 @@ Text Book: TBA
   Dynamics.  iRobot Roomba. Non-mobile industrial robots. (Pictures!)
 
   - ![C3PO](https://www.theoldrobots.com/images27/c3po_03.JPG)
-  - ![Commander Data](https://i.stack.imgur.com/dxSQt.jpg)
+  - ![Commander Data](https://i.stack.imgur.com/dxSQl.jpg)
   
   How robots work. Motors for muscles.  Sensors to help robots "see".  
   Batteries to give robots the energy to operate.
