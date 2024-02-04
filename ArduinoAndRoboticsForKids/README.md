@@ -27,6 +27,7 @@ Text Book: TBA
 - Arduino and Electronics
 
   -  LEDs and resistors: Blink a LED.
+  -  Operating a servo for precise movement.
   -  Transistors and Motors: using a transistor to do the heavy lifting.
   -  LDRs to sense how bright it is.
   -  Using sound to navigate like a bat: using an ultrasonic sensor to measure 
