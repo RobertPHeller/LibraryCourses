@@ -24,10 +24,10 @@ Text Book: TBA
   Batteries to give robots the energy to operate.
   
 - Arduino and Electronics
-  LEDs and resistors: Blink a LED.
-  Transistors and Motors: using a transistor to do the heavy lifting.
-  LDRs to sense how bright it is.
-  Using sound to navigate like a bat: using an ultrasonic sensor to measure 
+  -  LEDs and resistors: Blink a LED.
+  -  Transistors and Motors: using a transistor to do the heavy lifting.
+  -  LDRs to sense how bright it is.
+  -  Using sound to navigate like a bat: using an ultrasonic sensor to measure 
   distance. 
 
 - Assembling a wheeled platform for our robot
