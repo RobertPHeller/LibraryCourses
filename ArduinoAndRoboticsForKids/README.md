@@ -21,8 +21,8 @@ Text Book: TBA
   - ![Roomba](https://www.so-nerdy.com/wp-content/uploads/2020/12/IRobot-Roomba-960-Review.jpg)
   - ![Industrial Robots](https://www.rg-robotics.com/wp-content/uploads/2019/06/industrial-robotics.jpeg)
   
-  How robots work. Motors for muscles.  Sensors to help robots "see".  
-  Batteries to give robots the energy to operate.
+  How robots work. Motors for muscles. Sensors to help robots "see". Micro
+  Processors for brains. Batteries to give robots the energy to operate.
   
 - Arduino and Electronics
 
