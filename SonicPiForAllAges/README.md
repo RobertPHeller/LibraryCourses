@@ -1,6 +1,6 @@
 # Sonic Pi For All Ages
 
-This is a course teachine Sonic Pi, which is a programming environment for 
+This is a course teaching Sonic Pi, which is a programming environment for 
 making music. This is an all-ages course.  
 
 Text Book: "Coding Actities For Developing Music with Sonic Pi" 
