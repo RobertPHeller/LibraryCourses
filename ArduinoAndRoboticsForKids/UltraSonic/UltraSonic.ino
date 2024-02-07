@@ -5,14 +5,14 @@
     by Segilmez06, 22 April 2023.
 */
 
-#include <DistanceSensor.h>
+#include <SRF05.h>
 
 // Define pins
 const int echoPin = 12;
-const int trigPin = 13;
+//const int trigPin = 13;
 
-// Start the sensor
-DistanceSensor sensor(trigPin, echoPin);
+// Start the sensor -- single pin mode.
+SRF05 sensor(echoPin);
 
 void setup () {
     // Start serial port
@@ -21,7 +21,7 @@ void setup () {
 
 void loop () {
     // Get distance in cm
-    int distance = sensor.getCM();
+    int distance = sensor.getCentimeter();
 
     // Write values to serial port
     Serial.print("Distance: ");
