@@ -1,7 +1,6 @@
 // Project 9? Light the lamp
 int LED = 13;                      //define LED digital pin 13
-int val = 0;                       //define the voltage value of photo diode in
-digital pin 0
+int val = 0;                       //define the voltage value of photo diode in digital pin 0
 void setup(){
     pinMode(LED,OUTPUT);           // Configure LED as output mode
     Serial.begin(9600);            //Configure baud rate 9600
