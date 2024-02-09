@@ -8,7 +8,7 @@
 #  Author        : $Author$
 #  Created By    : Robert Heller
 #  Created       : Fri Feb 9 09:01:43 2024
-#  Last Modified : <240209.1612>
+#  Last Modified : <240209.1614>
 #
 #  Description	
 #
@@ -107,10 +107,10 @@ class RearHeadlightCasing(CasingSizes):
             raise RuntimeError("origin is not a Vector!")
         self.origin = origin
         self.casing = Part.makePlane(CasingSizes.Width(),CasingSizes.Length(),origin).extrude(Base.Vector(0,0,.125*25.4))
-        h1orig = origin.add(Base.Vector(CasingSizes.HeadLightXEndOffset(),CasingSizes.HeadLightYOffset(),0))
+        h1orig = origin.add(Base.Vector(CasingSizes.HeadLightYOffset(),CasingSizes.HeadLightXEndOffset(),0))
         h1 = Part.Face(Part.Wire(Part.makeCircle((.9*CasingSizes.HeadlightHoleDiameter())/2.0,h1orig))).extrude(Base.Vector(0,0,.125*25.4))
         self.casing = self.casing.cut(h1)
-        h2orig = origin.add(Base.Vector(CasingSizes.Length()-CasingSizes.HeadLightXEndOffset(),CasingSizes.HeadLightYOffset(),0))
+        h2orig = origin.add(Base.Vector(CasingSizes.HeadLightYOffset(),CasingSizes.Length()-CasingSizes.HeadLightXEndOffset(),0))
         h2 = Part.Face(Part.Wire(Part.makeCircle((.9*CasingSizes.HeadlightHoleDiameter())/2.0,h2orig))).extrude(Base.Vector(0,0,.125*25.4))
         self.casing = self.casing.cut(h2)
     def show(self,doc=None):
