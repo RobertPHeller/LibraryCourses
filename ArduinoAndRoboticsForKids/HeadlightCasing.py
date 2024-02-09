@@ -8,7 +8,7 @@
 #  Author        : $Author$
 #  Created By    : Robert Heller
 #  Created       : Fri Feb 9 09:01:43 2024
-#  Last Modified : <240209.1608>
+#  Last Modified : <240209.1612>
 #
 #  Description	
 #
@@ -95,10 +95,10 @@ class CasingSizes(object):
         return .24*25.4
     @staticmethod
     def HeadLightYOffset():
-        return 7.62
+        return 7.62+(.0625*25.4)
     @staticmethod
     def HeadLightXEndOffset():
-        return 7.62
+        return 7.62+(.0625*25.4)
 
 class RearHeadlightCasing(CasingSizes):
     def __init__(self,name,origin):
