@@ -8,7 +8,7 @@
 #  Author        : $Author$
 #  Created By    : Robert Heller
 #  Created       : Fri Feb 9 09:01:43 2024
-#  Last Modified : <240209.1604>
+#  Last Modified : <240209.1608>
 #
 #  Description	
 #
@@ -117,7 +117,7 @@ class RearHeadlightCasing(CasingSizes):
         if doc==None:
             doc = App.activeDocument()
         obj = doc.addObject("Part::Feature",self.name)
-        obj.Shape=self.board
+        obj.Shape=self.casing
         obj.Label=self.name
         obj.ViewObject.ShapeColor=tuple([0.5,0.5,0.5])
         
