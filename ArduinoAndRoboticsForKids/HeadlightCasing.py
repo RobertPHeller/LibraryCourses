@@ -8,7 +8,7 @@
 #  Author        : $Author$
 #  Created By    : Robert Heller
 #  Created       : Fri Feb 9 09:01:43 2024
-#  Last Modified : <240209.0925>
+#  Last Modified : <240209.1604>
 #
 #  Description	
 #
@@ -52,10 +52,10 @@ from math import *
 class HeadlightBoard(object):
     @staticmethod
     def Width():
-        return 109
+        return 109.22
     @staticmethod
-    def Height():
-        return 14
+    def Length():
+        return 15.24
     @staticmethod
     def Thickness():
         return 1.5
@@ -64,7 +64,7 @@ class HeadlightBoard(object):
         if not isinstance(origin,Base.Vector):
             raise RuntimeError("origin is not a Vector!")
         self.origin = origin
-        self.board = Part.makePlane(HeadlightBoard.Width(),HeadlightBoard.Height(),origin).extrude(Base.Vector(0,0,HeadlightBoard.Thickness()))
+        self.board = Part.makePlane(HeadlightBoard.Width(),HeadlightBoard.Length(),origin).extrude(Base.Vector(0,0,HeadlightBoard.Thickness()))
     def show(self,doc=None):
         if doc==None:
             doc = App.activeDocument()
@@ -74,10 +74,68 @@ class HeadlightBoard(object):
         obj.ViewObject.ShapeColor=tuple([0.0,1.0,0.0])
         
 
+class CasingSizes(object):
+    @staticmethod
+    def Width():
+        return HeadlightBoard.Width()+(.125*25.4)
+    @staticmethod
+    def Length():
+        return HeadlightBoard.Length()+(.125*25.4)
+    @staticmethod
+    def RearHeight():
+        return .375*25.4
+    @staticmethod
+    def FrontHeight():
+        return .125*25.4
+    @staticmethod
+    def RearFlange():
+        return .5*25.4
+    @staticmethod
+    def HeadlightHoleDiameter():
+        return .24*25.4
+    @staticmethod
+    def HeadLightYOffset():
+        return 7.62
+    @staticmethod
+    def HeadLightXEndOffset():
+        return 7.62
+
+class RearHeadlightCasing(CasingSizes):
+    def __init__(self,name,origin):
+        self.name = name
+        if not isinstance(origin,Base.Vector):
+            raise RuntimeError("origin is not a Vector!")
+        self.origin = origin
+        self.casing = Part.makePlane(CasingSizes.Width(),CasingSizes.Length(),origin).extrude(Base.Vector(0,0,.125*25.4))
+        h1orig = origin.add(Base.Vector(CasingSizes.HeadLightXEndOffset(),CasingSizes.HeadLightYOffset(),0))
+        h1 = Part.Face(Part.Wire(Part.makeCircle((.9*CasingSizes.HeadlightHoleDiameter())/2.0,h1orig))).extrude(Base.Vector(0,0,.125*25.4))
+        self.casing = self.casing.cut(h1)
+        h2orig = origin.add(Base.Vector(CasingSizes.Length()-CasingSizes.HeadLightXEndOffset(),CasingSizes.HeadLightYOffset(),0))
+        h2 = Part.Face(Part.Wire(Part.makeCircle((.9*CasingSizes.HeadlightHoleDiameter())/2.0,h2orig))).extrude(Base.Vector(0,0,.125*25.4))
+        self.casing = self.casing.cut(h2)
+    def show(self,doc=None):
+        if doc==None:
+            doc = App.activeDocument()
+        obj = doc.addObject("Part::Feature",self.name)
+        obj.Shape=self.board
+        obj.Label=self.name
+        obj.ViewObject.ShapeColor=tuple([0.5,0.5,0.5])
+        
+
+
+
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
     App.ActiveDocument=App.newDocument("Temp") 
     doc = App.activeDocument() 
-    pcb = HeadlightBoard("pcb",Base.Vector(0,0,0))
-    pcb.show(doc)
+    rearcase = RearHeadlightCasing("rearcase",Base.Vector(0,0,0))
+    rearcase.show(doc)
     Gui.SendMsgToActiveView("ViewFit")
     
