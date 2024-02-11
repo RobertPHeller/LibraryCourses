@@ -8,7 +8,7 @@
 #  Author        : $Author$
 #  Created By    : Robert Heller
 #  Created       : Fri Feb 9 09:01:43 2024
-#  Last Modified : <240211.1254>
+#  Last Modified : <240211.1352>
 #
 #  Description	
 #
@@ -76,6 +76,9 @@ class HeadlightBoard(object):
 
 class CasingSizes(object):
     @staticmethod
+    def WallThickness():
+        return (.125*25.4)
+    @staticmethod
     def Width():
         return HeadlightBoard.Width()+(.125*25.4)
     @staticmethod
@@ -111,20 +114,32 @@ class RearHeadlightCasing(CasingSizes):
         yoff = CasingSizes.HeadLightYOffset()
         xoff1 = CasingSizes.HeadLightXEndOffset()
         xoff2 = CasingSizes.Width()-CasingSizes.HeadLightXEndOffset()
-        print("*** CasingSizes.Width() = ",CasingSizes.Width(),file=sys.stderr)
-        print("*** yoff = ",yoff,", xoff1 = ",xoff1,", xoff2 = ",xoff2, file=sys.stderr)
+        #print("*** CasingSizes.Width() = ",CasingSizes.Width(),file=sys.stderr)
+        #print("*** yoff = ",yoff,", xoff1 = ",xoff1,", xoff2 = ",xoff2, file=sys.stderr)
         h1orig = origin.add(Base.Vector(xoff1, \
                                         yoff, \
                                         0))
         h1 = Part.Face(Part.Wire(Part.makeCircle((.9*CasingSizes.HeadlightHoleDiameter())/2.0,h1orig))).extrude(Base.Vector(0,0,.125*25.4))
-        print("*** h1orig is ",h1orig.x, h1orig.y, h1orig.z, file=sys.stderr)
+        #print("*** h1orig is ",h1orig.x, h1orig.y, h1orig.z, file=sys.stderr)
         self.casing = self.casing.cut(h1)
         h2orig = origin.add(Base.Vector(xoff2, \
                                         yoff,\
                                         0))
         h2 = Part.Face(Part.Wire(Part.makeCircle((.9*CasingSizes.HeadlightHoleDiameter())/2.0,h2orig))).extrude(Base.Vector(0,0,.125*25.4))
-        print("*** h2orig is ",h2orig.x, h2orig.y, h2orig.z, file=sys.stderr)
+        #print("*** h2orig is ",h2orig.x, h2orig.y, h2orig.z, file=sys.stderr)
         self.casing = self.casing.cut(h2)
+        wallThick = CasingSizes.WallThickness()
+        wallL = CasingSizes.Width()
+        wallW = CasingSizes.Length()
+        wallH = CasingSizes.RearHeight()
+        w1 = Part.makePlane(wallL,wallThick,origin).extrude(Base.Vector(0,0,wallH))
+        w2 = Part.makePlane(wallL,wallThick,origin.add(Base.Vector(0,CasingSizes.Length()-wallThick,0))).extrude(Base.Vector(0,0,wallH))
+        w3 = Part.makePlane(wallThick,wallW,origin).extrude(Base.Vector(0,0,wallH))
+        w4 = Part.makePlane(wallThick,wallW,originadd(Base.Vector(CasingSizes.Length()-wallThick,0,0))).extrude(Base.Vector(0,0,wallH))
+        self.casing = self.casing.fuse(w1)
+        self.casing = self.casing.fuse(w2)
+        self.casing = self.casing.fuse(w3)
+        self.casing = self.casing.fuse(w4)
     def show(self,doc=None):
         if doc==None:
             doc = App.activeDocument()
