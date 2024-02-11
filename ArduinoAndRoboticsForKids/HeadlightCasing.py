@@ -8,7 +8,7 @@
 #  Author        : $Author$
 #  Created By    : Robert Heller
 #  Created       : Fri Feb 9 09:01:43 2024
-#  Last Modified : <240211.1235>
+#  Last Modified : <240211.1243>
 #
 #  Description	
 #
@@ -106,12 +106,21 @@ class RearHeadlightCasing(CasingSizes):
         if not isinstance(origin,Base.Vector):
             raise RuntimeError("origin is not a Vector!")
         self.origin = origin
-        self.casing = Part.makePlane(CasingSizes.Width(),CasingSizes.Length(),origin).extrude(Base.Vector(0,0,.125*25.4))
-        h1orig = origin.add(Base.Vector(CasingSizes.HeadLightYOffset(),CasingSizes.HeadLightXEndOffset(),0))
+        self.casing = Part.makePlane(CasingSizes.Width(),CasingSizes.Length(),\
+                                     origin).extrude(Base.Vector(0,0,.125*25.4))
+        yoff = CasingSizes.HeadLightYOffset()
+        xoff1 = CasingSizes.HeadLightXEndOffset()
+        xoff2 = CasingSizes.Length()-CasingSizes.HeadLightXEndOffset()
+        print("*** yoff = ",yoff.", xoff1 = ",xoff1,", xoff2 = ",xoff2, file=sys.stderr)
+        h1orig = origin.add(Base.Vector(yoff, \
+                                        xoff1, \
+                                        0))
         h1 = Part.Face(Part.Wire(Part.makeCircle((.9*CasingSizes.HeadlightHoleDiameter())/2.0,h1orig))).extrude(Base.Vector(0,0,.125*25.4))
         print("*** h1orig is ",h1orig.x, h1orig.y, h1orig.z, file=sys.stderr)
         self.casing = self.casing.cut(h1)
-        h2orig = origin.add(Base.Vector(CasingSizes.HeadLightYOffset(),CasingSizes.Length()-CasingSizes.HeadLightXEndOffset(),0))
+        h2orig = origin.add(Base.Vector(yoff, \
+                                        xoff2,\
+                                        0))
         h2 = Part.Face(Part.Wire(Part.makeCircle((.9*CasingSizes.HeadlightHoleDiameter())/2.0,h2orig))).extrude(Base.Vector(0,0,.125*25.4))
         print("*** h2orig is ",h2orig.x, h2orig.y, h2orig.z, file=sys.stderr)
         self.casing = self.casing.cut(h2)
