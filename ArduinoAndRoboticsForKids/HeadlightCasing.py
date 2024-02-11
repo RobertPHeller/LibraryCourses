@@ -8,7 +8,7 @@
 #  Author        : $Author$
 #  Created By    : Robert Heller
 #  Created       : Fri Feb 9 09:01:43 2024
-#  Last Modified : <240211.1403>
+#  Last Modified : <240211.1404>
 #
 #  Description	
 #
@@ -92,7 +92,7 @@ class CasingSizes(object):
         return .125*25.4
     @staticmethod
     def RearFlange():
-        return .625*25.4
+        return (.375+.5)*25.4
     @staticmethod
     def HeadlightHoleDiameter():
         return .24*25.4
