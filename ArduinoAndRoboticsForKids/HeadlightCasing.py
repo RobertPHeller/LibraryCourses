@@ -8,7 +8,7 @@
 #  Author        : $Author$
 #  Created By    : Robert Heller
 #  Created       : Fri Feb 9 09:01:43 2024
-#  Last Modified : <240211.1251>
+#  Last Modified : <240211.1253>
 #
 #  Description	
 #
@@ -108,11 +108,10 @@ class RearHeadlightCasing(CasingSizes):
         self.origin = origin
         self.casing = Part.makePlane(CasingSizes.Width(),CasingSizes.Length(),\
                                      origin).extrude(Base.Vector(0,0,.125*25.4))
-        yoff = 0
-        #CasingSizes.HeadLightYOffset()
+        yoff = CasingSizes.HeadLightYOffset()
         xoff1 = CasingSizes.HeadLightXEndOffset()
-        xoff2 = CasingSizes.Length()-CasingSizes.HeadLightXEndOffset()
-        print("*** CasingSizes.Length() = ",CasingSizes.Length(),file=sys.stderr)
+        xoff2 = CasingSizes.Width()-CasingSizes.HeadLightXEndOffset()
+        print("*** CasingSizes.Width() = ",CasingSizes.Width(),file=sys.stderr)
         print("*** yoff = ",yoff,", xoff1 = ",xoff1,", xoff2 = ",xoff2, file=sys.stderr)
         h1orig = origin.add(Base.Vector(yoff, \
                                         xoff1, \
