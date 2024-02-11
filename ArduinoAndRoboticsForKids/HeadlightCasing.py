@@ -8,7 +8,7 @@
 #  Author        : $Author$
 #  Created By    : Robert Heller
 #  Created       : Fri Feb 9 09:01:43 2024
-#  Last Modified : <240211.1353>
+#  Last Modified : <240211.1354>
 #
 #  Description	
 #
@@ -135,7 +135,7 @@ class RearHeadlightCasing(CasingSizes):
         w1 = Part.makePlane(wallL,wallThick,origin).extrude(Base.Vector(0,0,wallH))
         w2 = Part.makePlane(wallL,wallThick,origin.add(Base.Vector(0,CasingSizes.Length()-wallThick,0))).extrude(Base.Vector(0,0,wallH))
         w3 = Part.makePlane(wallThick,wallW,origin).extrude(Base.Vector(0,0,wallH))
-        w4 = Part.makePlane(wallThick,wallW,origin.add(Base.Vector(CasingSizes.Length()-wallThick,0,0))).extrude(Base.Vector(0,0,wallH))
+        w4 = Part.makePlane(wallThick,wallW,origin.add(Base.Vector(CasingSizes.Width()-wallThick,0,0))).extrude(Base.Vector(0,0,wallH))
         self.casing = self.casing.fuse(w1)
         self.casing = self.casing.fuse(w2)
         self.casing = self.casing.fuse(w3)
