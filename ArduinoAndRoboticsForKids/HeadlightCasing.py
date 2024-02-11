@@ -8,7 +8,7 @@
 #  Author        : $Author$
 #  Created By    : Robert Heller
 #  Created       : Fri Feb 9 09:01:43 2024
-#  Last Modified : <240211.1359>
+#  Last Modified : <240211.1403>
 #
 #  Description	
 #
@@ -92,7 +92,7 @@ class CasingSizes(object):
         return .125*25.4
     @staticmethod
     def RearFlange():
-        return .5*25.4
+        return .625*25.4
     @staticmethod
     def HeadlightHoleDiameter():
         return .24*25.4
@@ -142,6 +142,8 @@ class RearHeadlightCasing(CasingSizes):
         self.casing = self.casing.fuse(w4)
         b = HeadlightBoard(name+"_board",origin.add(Base.Vector(wallThick/2.0,wallThick/2.0,wallH-HeadlightBoard.Thickness())))
         self.casing = self.casing.cut(b.board)
+        flange = Part.makePlane(wallL,wallThick,origin.add(Base.Vector(0,-wallThick,0))).extrude(Base.Vector(0,0,CasingSizes.RearFlange()))
+        self.casing = self.casing.fuse(flange)
     def show(self,doc=None):
         if doc==None:
             doc = App.activeDocument()
