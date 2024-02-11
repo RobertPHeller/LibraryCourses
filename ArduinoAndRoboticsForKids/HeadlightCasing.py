@@ -8,7 +8,7 @@
 #  Author        : $Author$
 #  Created By    : Robert Heller
 #  Created       : Fri Feb 9 09:01:43 2024
-#  Last Modified : <240211.1244>
+#  Last Modified : <240211.1247>
 #
 #  Description	
 #
@@ -111,6 +111,7 @@ class RearHeadlightCasing(CasingSizes):
         yoff = CasingSizes.HeadLightYOffset()
         xoff1 = CasingSizes.HeadLightXEndOffset()
         xoff2 = CasingSizes.Length()-CasingSizes.HeadLightXEndOffset()
+        print("*** CasingSizes.Length() = ",CasingSizes.Length(),file=sys.stderr)
         print("*** yoff = ",yoff,", xoff1 = ",xoff1,", xoff2 = ",xoff2, file=sys.stderr)
         h1orig = origin.add(Base.Vector(yoff, \
                                         xoff1, \
