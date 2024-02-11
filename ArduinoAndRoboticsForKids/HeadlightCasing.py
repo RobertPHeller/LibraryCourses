@@ -8,7 +8,7 @@
 #  Author        : $Author$
 #  Created By    : Robert Heller
 #  Created       : Fri Feb 9 09:01:43 2024
-#  Last Modified : <240211.1354>
+#  Last Modified : <240211.1357>
 #
 #  Description	
 #
@@ -140,6 +140,8 @@ class RearHeadlightCasing(CasingSizes):
         self.casing = self.casing.fuse(w2)
         self.casing = self.casing.fuse(w3)
         self.casing = self.casing.fuse(w4)
+        b = HeadlightBoard(name+"_board",origin.add(Base.Vector(wallThick/2.0,wallThick/2.0,wallH-HeadlightBoard.Thickness()))
+        self.casing = self.casing.cut(b.board)
     def show(self,doc=None):
         if doc==None:
             doc = App.activeDocument()
