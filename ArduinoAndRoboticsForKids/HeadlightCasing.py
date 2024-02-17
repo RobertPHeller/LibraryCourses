@@ -8,7 +8,7 @@
 #  Author        : $Author$
 #  Created By    : Robert Heller
 #  Created       : Fri Feb 9 09:01:43 2024
-#  Last Modified : <240211.1404>
+#  Last Modified : <240217.1604>
 #
 #  Description	
 #
@@ -151,9 +151,43 @@ class RearHeadlightCasing(CasingSizes):
         obj.Shape=self.casing
         obj.Label=self.name
         obj.ViewObject.ShapeColor=tuple([0.5,0.5,0.5])
-        
+    def ExportSTL(self,filename="RearHeadlightCasing.stl"):
+        self.casing.exportStl(filename)
 
-
+class FrontHeadlightCasing(CasingSizes):
+    def __init__(self,name,origin):
+        self.name = name
+        if not isinstance(origin,Base.Vector):
+            raise RuntimeError("origin is not a Vector!")
+        self.origin = origin
+        self.casing = Part.makePlane(CasingSizes.Width(),CasingSizes.Length(),\
+                                     origin).extrude(Base.Vector(0,0,.125*25.4))
+        yoff = CasingSizes.HeadLightYOffset()
+        xoff1 = CasingSizes.HeadLightXEndOffset()
+        xoff2 = CasingSizes.Width()-CasingSizes.HeadLightXEndOffset()
+        #print("*** CasingSizes.Width() = ",CasingSizes.Width(),file=sys.stderr)
+        #print("*** yoff = ",yoff,", xoff1 = ",xoff1,", xoff2 = ",xoff2, file=sys.stderr)
+        h1orig = origin.add(Base.Vector(xoff1, \
+                                        yoff, \
+                                        0))
+        h1 = Part.Face(Part.Wire(Part.makeCircle((CasingSizes.HeadlightHoleDiameter())/2.0,h1orig))).extrude(Base.Vector(0,0,.125*25.4))
+        #print("*** h1orig is ",h1orig.x, h1orig.y, h1orig.z, file=sys.stderr)
+        self.casing = self.casing.cut(h1)
+        h2orig = origin.add(Base.Vector(xoff2, \
+                                        yoff,\
+                                        0))
+        h2 = Part.Face(Part.Wire(Part.makeCircle((CasingSizes.HeadlightHoleDiameter())/2.0,h2orig))).extrude(Base.Vector(0,0,.125*25.4))
+        #print("*** h2orig is ",h2orig.x, h2orig.y, h2orig.z, file=sys.stderr)
+        self.casing = self.casing.cut(h2)
+    def show(self,doc=None):
+        if doc==None:
+            doc = App.activeDocument()
+        obj = doc.addObject("Part::Feature",self.name)
+        obj.Shape=self.casing
+        obj.Label=self.name
+        obj.ViewObject.ShapeColor=tuple([0.5,0.5,0.5])
+    def ExportSTL(self,filename="FrontHeadlightCasing.stl"):
+        self.casing.exportStl(filename)
 
 
 
@@ -168,5 +202,9 @@ if __name__ == '__main__':
     doc = App.activeDocument() 
     rearcase = RearHeadlightCasing("rearcase",Base.Vector(0,0,0))
     rearcase.show(doc)
+    rearcase.ExportSTL()
+    frontcase = FrontHeadlightCasing("frontcase",Base.Vector(0,30,0))
+    frontcase.show(doc)
+    frontcase.ExportSTL()
     Gui.SendMsgToActiveView("ViewFit")
     
