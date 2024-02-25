@@ -9,9 +9,11 @@
 - [SRF05 Ultrasonic Distance Sensor](https://www.dfrobot.com/product-333.html) 2x
 - [Gravity: IR Kit for Arduino](https://www.dfrobot.com/product-366.html)
 - [Gravity: Analog Ambient Light Sensor TEMT6000](https://www.dfrobot.com/product-274.html)
+- Headlight parts
 
 ## Optional
 - [Raspberry Pi 4 Model B - 4GB](https://www.dfrobot.com/product-1875.html)
 - [UPS HAT for Raspberry Pi 4B/3B+/3B](https://www.dfrobot.com/product-1825.html)
 - [Camera for Raspberry Pi](https://www.dfrobot.com/product-1179.html)
-
+- [battery for the UPS HAT](https://www.adafruit.com/product/328)
+- Speaker
