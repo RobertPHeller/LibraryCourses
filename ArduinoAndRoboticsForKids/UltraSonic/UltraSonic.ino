@@ -8,11 +8,11 @@
 #include <SRF05.h>
 
 // Define pins
-const int echoPin = 12;
-//const int trigPin = 13;
+const int echoPin = 11;
+const int trigPin = 10;
 
 // Start the sensor -- single pin mode.
-SRF05 sensor(echoPin);
+SRF05 sensor(trigPin,echoPin);
 
 void setup () {
     // Start serial port
