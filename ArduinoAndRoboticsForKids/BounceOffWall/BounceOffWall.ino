@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Wed Sep 11 20:49:30 2024
-//  Last Modified : <240911.2106>
+//  Last Modified : <240913.1657>
 //
 //  Description	
 //
@@ -63,12 +63,15 @@ DFMobile Robot (4,5,7,6);     // initiate the Motor pin
 
 void setup() {
     Robot.Direction (LOW,HIGH);  // initiate the positive direction
+    pinMode(13,OUTPUT);
 }
 
 void turn()
 {
+    digitalWrite(13,HIGH);
     Robot.Speed(-255,255);
     delay(800);
+    digitalWrite(13,LOW);
 }
 void forward()
 {
