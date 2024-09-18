@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Wed Sep 11 20:49:30 2024
-//  Last Modified : <240913.1657>
+//  Last Modified : <240918.1345>
 //
 //  Description	
 //
@@ -55,7 +55,7 @@ static const char rcsid[] = "@(#) : $Id$";
 const int echoPin = 9;
 const int trigPin = 8;
 // Closeness is 5 cm
-#define CLOSE 5
+#define CLOSE 7.5
 // Start the sensor -- two pin mode.
 SRF05 sensor(trigPin,echoPin);
 
@@ -70,7 +70,7 @@ void turn()
 {
     digitalWrite(13,HIGH);
     Robot.Speed(-255,255);
-    delay(800);
+    delay(900);
     digitalWrite(13,LOW);
 }
 void forward()
