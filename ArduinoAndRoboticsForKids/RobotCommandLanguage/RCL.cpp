@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:35:57 2024
-//  Last Modified : <240926.1130>
+//  Last Modified : <240926.1132>
 //
 //  Description	
 //
@@ -287,7 +287,7 @@ int RobotCommandLanguage::parse_()
             {
                 if (yylex() == INTEGER)
                 {
-                    int speed = CheckRangeInt(yylval.ival,0,100);
+                    int speed = CheckRangeInt(yylval.ival,10,100);
                     int loop = yylex();
                     if (loop == WHILE || loop == UNTIL)
                     {
