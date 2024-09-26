@@ -16,4 +16,7 @@
 - [UPS HAT for Raspberry Pi 4B/3B+/3B](https://www.dfrobot.com/product-1825.html)
 - [Camera for Raspberry Pi](https://www.dfrobot.com/product-1179.html)
 - [battery for the UPS HAT](https://www.adafruit.com/product/328)
+- [ADXL343 - Triple-Axis Accelerometer (+-2g/4g/8g/16g) w/ I2C/SPI - STEMMA QT / Qwiic](https://www.adafruit.com/product/4097)
+- [Adafruit QT 5V to 3V Level Shifter Breakout - STEMMA QT / Qwiic](https://www.adafruit.com/product/5637)
+- [Adafruit LSM6DSOX + LIS3MDL - Precision 9 DoF IMU - STEMMA QT / Qwiic](https://www.adafruit.com/product/4517)
 - Speaker
