@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:35:57 2024
-//  Last Modified : <240926.1029>
+//  Last Modified : <240926.1130>
 //
 //  Description	
 //
@@ -63,6 +63,7 @@ int RobotCommandLanguage::lookup_word(const char *word) const
         {"GRIP", GRIP},
         {"HEADING", HEADING},
         {"HEADLIGHT", HEADLIGHT},
+        {"LEFT", LEFT},
         {"MOTOR", MOTOR},
         {"OFF", OFF},
         {"ON", ON},
@@ -70,6 +71,7 @@ int RobotCommandLanguage::lookup_word(const char *word) const
         {"PAN", PAN},
         {"REAR", REAR},
         {"REMOTE", REMOTE},
+        {"RIGHT", RIGHT},
         {"TILT", TILT},
         {"TURN", TURN},
         {"UNTIL", UNTIL},
@@ -280,18 +282,26 @@ int RobotCommandLanguage::parse_()
         }
     case TURN:
         {
-            int loop = yylex();
-            if (loop == WHILE || loop == UNTIL)
+            int direction = yylex();
+            if (direction == LEFT || direction == RIGHT)
             {
-                int what = yylex();
-                if (what == ANGLE || what == HEADING)
+                if (yylex() == INTEGER)
                 {
-                    int cond = yylex();
-                    if (IsConditional(cond))
+                    int speed = CheckRangeInt(yylval.ival,0,100);
+                    int loop = yylex();
+                    if (loop == WHILE || loop == UNTIL)
                     {
-                        if (yylex() == FLOAT)
+                        int what = yylex();
+                        if (what == ANGLE || what == HEADING)
                         {
-                            DoTurn(loop,what,cond,yylval.fval);
+                            int cond = yylex();
+                            if (IsConditional(cond))
+                            {
+                                if (yylex() == FLOAT)
+                                {
+                                    DoTurn(direction,speed,loop,what,cond,CheckRangeFloat(yylval.fval,0,360));
+                                } else return -1;
+                            } else return -1;
                         } else return -1;
                     } else return -1;
                 } else return -1;

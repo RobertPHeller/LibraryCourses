@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:15:57 2024
-//  Last Modified : <240926.1033>
+//  Last Modified : <240926.1131>
 //
 //  Description	
 //
@@ -164,7 +164,7 @@ void RobotCommands::ZeroHeading()
     Serial.println("Zero Heading: N/A");
 }
 
-void RobotCommands::DoTurn(int loop, int what, int cond, double value)
+void RobotCommands::DoTurn(int direction,int speed,int loop, int what, int cond, double value)
 {
     Serial.println("DoTurn ...: N/A");
 }

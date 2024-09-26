@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:01:53 2024
-//  Last Modified : <240926.1031>
+//  Last Modified : <240926.1130>
 //
 //  Description	
 //
@@ -65,7 +65,7 @@ public:
     void SendOrientation();
     void ZeroAngle();
     void ZeroHeading();
-    void DoTurn(int loop, int what, int cond, double value);
+    void DoTurn(int direction,int speed,int loop, int what, int cond, double value);
 };
 
 #endif // __ROBOTCOMMANDS_H
