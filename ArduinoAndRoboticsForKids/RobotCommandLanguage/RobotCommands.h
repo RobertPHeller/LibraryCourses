@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:01:53 2024
-//  Last Modified : <240924.1735>
+//  Last Modified : <240926.1031>
 //
 //  Description	
 //
@@ -63,6 +63,9 @@ public:
     void Headlight(int onoff);
     void SendAcceleration();
     void SendOrientation();
+    void ZeroAngle();
+    void ZeroHeading();
+    void DoTurn(int loop, int what, int cond, double value);
 };
 
 #endif // __ROBOTCOMMANDS_H

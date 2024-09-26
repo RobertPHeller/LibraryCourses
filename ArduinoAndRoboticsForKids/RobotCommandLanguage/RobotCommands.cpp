@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:15:57 2024
-//  Last Modified : <240924.1735>
+//  Last Modified : <240926.1033>
 //
 //  Description	
 //
@@ -154,4 +154,18 @@ void RobotCommands::SendOrientation()
     Serial.println("Orientation: N/A");
 }
 
+void RobotCommands::ZeroAngle()
+{
+    Serial.println("Zero Angle: N/A");
+}
+
+void RobotCommands::ZeroHeading()
+{
+    Serial.println("Zero Heading: N/A");
+}
+
+void RobotCommands::DoTurn(int loop, int what, int cond, double value)
+{
+    Serial.println("DoTurn ...: N/A");
+}
 

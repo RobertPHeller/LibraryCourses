@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:35:57 2024
-//  Last Modified : <240926.0934>
+//  Last Modified : <240926.1029>
 //
 //  Description	
 //
@@ -266,6 +266,37 @@ int RobotCommandLanguage::parse_()
     case ORIENTATION:
         if (yylex() == EOL) SendOrientation();
         else return -1;
+        break;
+    case ZERO:
+        switch (yylex())
+        {
+        case ANGLE:
+            ZeroAngle();
+            break;
+        case HEADING:
+            ZeroHeading();
+            break;
+        default: return -1;
+        }
+    case TURN:
+        {
+            int loop = yylex();
+            if (loop == WHILE || loop == UNTIL)
+            {
+                int what = yylex();
+                if (what == ANGLE || what == HEADING)
+                {
+                    int cond = yylex();
+                    if (IsConditional(cond))
+                    {
+                        if (yylex() == FLOAT)
+                        {
+                            DoTurn(loop,what,cond,yylval.fval);
+                        } else return -1;
+                    } else return -1;
+                } else return -1;
+            } else return -1;
+        }
         break;
     default: return -1;
     }
