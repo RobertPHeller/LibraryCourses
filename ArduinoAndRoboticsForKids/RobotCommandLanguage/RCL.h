@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:28:22 2024
-//  Last Modified : <240926.0925>
+//  Last Modified : <240926.1005>
 //
 //  Description	
 //
@@ -62,6 +62,7 @@ public:
         return parse_();
     }
 private:
+    friend class RobotCommands;
     int lookup_word(const char *word) const;
     int yylex();
     char command_[256];
@@ -71,31 +72,19 @@ private:
         int ival;
         float fval;
     } yylval;
-#ifdef USE_CONSTEXPR
-    static constexpr int INTEGER=258;
-    static constexpr int FLOAT=259;
-    static constexpr int EOL=260;
-    static constexpr int NOTWORD=261;
-    static constexpr int FRONT=262;
-    static constexpr int REAR=263;
-    static constexpr int MOTOR=264;
-    static constexpr int GRIP=265;
-    static constexpr int WRIST=266;
-    static constexpr int PAN=267;
-    static constexpr int TILT=268;
-    static constexpr int REMOTE=269;
-    static constexpr int HEADLIGHT=270;
-    static constexpr int ON=271;
-    static constexpr int OFF=272;
-    static constexpr int ACCELERATION=273;
-    static constexpr int ORIENTATION=274;
-#else
     enum {INTEGER=258,FLOAT,EOL,NOTWORD,FRONT,REAR,MOTOR,GRIP,WRIST,PAN,TILT,
         REMOTE,HEADLIGHT,ON,OFF,ACCELERATION,ORIENTATION,TURN,WHILE,UNTIL,
         ANGLE,HEADING,ZERO,EQ,NE,LT,GT,LE,GE
     };
-#endif    
-    
+    inline bool IsConditional(int cond) const
+    {
+        return cond == EQ ||
+              cond == NE ||
+              cond == LT ||
+              cond == GT ||
+              cond == LE ||
+              cond == GE;
+    }
     
 };
 
