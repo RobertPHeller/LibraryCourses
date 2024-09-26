@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Fri Sep 20 14:02:29 2024
-//  Last Modified : <240920.1405>
+//  Last Modified : <240920.1706>
 //
 //  Description	
 //
@@ -45,7 +45,7 @@ static const char rcsid[] = "@(#) : $Id$";
 #include <SRF05.h>
 #include <DFMobile.h>
 
-// Define pins
+// Define ultrasonic sensor pins
 // 8 front trigger
 // 9 front echo
 // 10 rear trigger
@@ -62,6 +62,11 @@ const int ReartrigPin = 10
 // Start the Rear sensor -- two pin mode.
 SRF05 RearSensor(ReartrigPin,RearechoPin);
 
+// Robot pins 
+// 4 Enable Left
+// 5 Left Speed
+// 7 Enable Right
+// 6 Right Speed
 DFMobile Robot (4,5,7,6);     // initiate the Motor pin
 
 void setup() {
