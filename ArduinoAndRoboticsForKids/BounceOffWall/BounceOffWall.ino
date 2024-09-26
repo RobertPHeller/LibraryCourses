@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Wed Sep 11 20:49:30 2024
-//  Last Modified : <240918.1345>
+//  Last Modified : <240921.1321>
 //
 //  Description	
 //
@@ -69,13 +69,13 @@ void setup() {
 void turn()
 {
     digitalWrite(13,HIGH);
-    Robot.Speed(-255,255);
-    delay(900);
+    Robot.Speed(-128,128);
+    delay(1675);
     digitalWrite(13,LOW);
 }
 void forward()
 {
-    Robot.Speed(128,128);
+    Robot.Speed(64,64);
 }
 
 void loop() {
