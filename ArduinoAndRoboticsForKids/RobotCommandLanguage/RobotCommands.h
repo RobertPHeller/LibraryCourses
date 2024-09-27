@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:01:53 2024
-//  Last Modified : <240926.1130>
+//  Last Modified : <240926.1949>
 //
 //  Description	
 //
@@ -45,6 +45,8 @@
 #ifndef __ROBOTCOMMANDS_H
 #define __ROBOTCOMMANDS_H
 
+
+
 class RobotCommands
 {
 public:
@@ -66,6 +68,8 @@ public:
     void ZeroAngle();
     void ZeroHeading();
     void DoTurn(int direction,int speed,int loop, int what, int cond, double value);
+private:
+    
 };
 
 #endif // __ROBOTCOMMANDS_H

@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:15:57 2024
-//  Last Modified : <240926.1131>
+//  Last Modified : <240926.2002>
 //
 //  Description	
 //
@@ -48,35 +48,52 @@ static const char rcsid[] = "@(#) : $Id$";
 #include "RobotCommands.h"
 #include <SRF05.h>
 #include <DFMobile.h>
+#include <Servo.h>
+#include <IRremote.h>
 
-// Define ultrasonic sensor pins
-// 8 front trigger
-// 9 front echo
-// 10 rear trigger
-// 11 rear echo
-//
-// Front
-const int FrontechoPin = 9;
-const int FronttrigPin = 8;
-// Start the Front sensor -- two pin mode.
-SRF05 FrontSensor(FronttrigPin,FrontechoPin);
-// Rear
-const int RearechoPin = 11;
-const int ReartrigPin = 10;
-// Start the Rear sensor -- two pin mode.
-SRF05 RearSensor(ReartrigPin,RearechoPin);
+#define  RX_Pin 0
+#define  TX_Pin 1
+#define  Front_Pin 2
+#define  Grip_Pin 3
+#define  M1_Pin 4
+#define  E1_Pin 5
+#define  E2_Pin 6
+#define  M2_Pin 7
+#define  Rear_Pin  8
+#define  Wrist_Pin  9
+#define  Pan_Pin  10
+#define  Tilt_Pin  11
+#define  IR_Pin 12
+#define  Headlights_Pin 13
 
-// Robot pins 
-// 4 Enable Left
-// 5 Left Speed
-// 7 Enable Right
-// 6 Right Speed
-DFMobile Robot (4,5,7,6);     // initiate the Motor pin
+#define  LDR_Pin A0
 
+/* Ultrasonic Sensors */
+SRF05 FrontSensor(Front_Pin);
+SRF05 RearSensor(Rear_Pin);
+
+/* Wheel motors */
+DFMobile Robot (M1_Pin,E1_Pin,M2_Pin,E2_Pin);     // initiate the Motor pins
+
+/* Gripper + Pan & Tilt */
+Servo grip, wrist, pan, tilt;
+
+/* Remote control */
+IRrecv irrecv(IR_Pin);
 
 void RobotCommands::setup()
 {
     Robot.Direction (LOW,HIGH);  // initiate the positive direction 
+    /* Gripper servos */
+    grip.attach(Grip_Pin);
+    wrist.attach(Wrist_Pin);
+    pan.attach(Pan_Pin);
+    tilt.attach(Tilt_Pin);
+    /* Remote control */
+    irrecv.enableIRIn();
+    /* Headlights */
+    pinMode(Headlights_Pin,OUTPUT);
+    digitalWrite(Headlights_Pin,LOW);
 }
 
 void RobotCommands::SendFrontDistance()

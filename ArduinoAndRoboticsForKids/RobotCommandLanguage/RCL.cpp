@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:35:57 2024
-//  Last Modified : <240926.1132>
+//  Last Modified : <240926.1632>
 //
 //  Description	
 //
@@ -175,15 +175,15 @@ int RobotCommandLanguage::parse_()
 {
     switch (yylex())
     {
-    case FRONT:
+    case FRONT: /* FRONT EOL {SendFrontDistance();} ; */
         if (yylex() == EOL) SendFrontDistance();
         else return -1;
         break;
-    case REAR:
+    case REAR: /* REAR EOL {SendRearDistance();} ; */
         if (yylex() == EOL) SendRearDistance();
         else return -1;
         break;
-    case MOTOR:
+    case MOTOR: /* MOTOR INTEGER ',' INTEGER EOL {Motor(CheckRangeInt($2,-255,255),CheckRangeInt($4,-255,255));} ; */
         {
             int left, right;
             if (yylex() == INTEGER)
@@ -201,29 +201,29 @@ int RobotCommandLanguage::parse_()
             } else return -1;
         }
         break;
-    case GRIP:
+    case GRIP: /* GRIP FLOAT EOL {Grip(CheckRangeFloat($2,0,100));} ; */
         {
             double gamount;
             if (yylex() == FLOAT)
             {
-                gamount = CheckRangeFloat(yylval.fval,-90,90);
+                gamount = CheckRangeFloat(yylval.fval,0,100);
                 if (yylex() == EOL) Grip(gamount);
                 else return -1;
             } else return -1;
         }
         break;
-    case WRIST:
+    case WRIST: /* WRIST FLOAT EOL {Wrist(CheckRangeFloat($2,-90,90));} ; */
         {
             double wangle;
             if (yylex() == FLOAT)
             {
-                wangle = CheckRangeFloat(yylval.fval,-45,45);
+                wangle = CheckRangeFloat(yylval.fval,-90,90);
                 if (yylex() == EOL) Wrist(wangle);
                 else return -1;
             } else return -1;
         }
         break;
-    case PAN:
+    case PAN: /* PAN FLOAT EOL {Pan(CheckRangeFloat($2,-90,90));} ; */ 
         {
             double pangle;
             if (yylex() == FLOAT)
@@ -234,7 +234,7 @@ int RobotCommandLanguage::parse_()
             } else return -1;
         }
         break;
-    case TILT:
+    case TILT: /* TILT FLOAT EOL {Tilt(CheckRangeFloat($2,-90,90));} ; */ 
         {
             double tangle;
             if (yylex() == FLOAT)
@@ -245,11 +245,11 @@ int RobotCommandLanguage::parse_()
             } else return -1;
         }
         break;
-    case REMOTE:
+    case REMOTE: /* REMOTE EOL {SendRemote();} ; */
         if (yylex() == EOL) SendRemote();
         else return -1;
         break;
-    case HEADLIGHT:
+    case HEADLIGHT: /* HEADLIGHT (ON {Headlight(1);} | OFF {Headlight(0);}) EOL ; */
         {
             int onoff;
             if (yylex() == ON) {
@@ -261,26 +261,38 @@ int RobotCommandLanguage::parse_()
             else return -1;
         }
         break;
-    case ACCELERATION:
+    case ACCELERATION: /* ACCELERATION EOL {SendAcceleration();} ; */
         if (yylex() == EOL) SendAcceleration();
         else return -1;
         break;
-    case ORIENTATION:
+    case ORIENTATION: /* ORIENTATION EOL {SendOrientation();} ; */
         if (yylex() == EOL) SendOrientation();
         else return -1;
         break;
-    case ZERO:
-        switch (yylex())
+    case ZERO: /* ZERO (ANGLE {ZeroAngle();} | HEADING {ZeroHeading();}) EOL; */ 
         {
-        case ANGLE:
-            ZeroAngle();
-            break;
-        case HEADING:
-            ZeroHeading();
-            break;
-        default: return -1;
+            int what = yylex();
+            if (what == ANGLE || what == HEADING)
+            {
+                if (yylex() == EOL)
+                {
+                    switch (what)
+                    {
+                    case ANGLE:
+                        ZeroAngle();
+                        break;
+                    case HEADING:
+                        ZeroHeading();
+                        break;
+                    default: return -1;
+                    }
+                } else return -1;
+            } else return -1;
         }
-    case TURN:
+        break;
+    case TURN: /* TURN (LEFT | RIGHT) INTEGER (WHILE|UNTIL) (ANGLE|HEADING) cont FLOAT EOL
+                *     {DoTurn($2,CheckRangeInt($3,10,100),$4,$5,$6,CheckRangeFloat($7,0,360));} ;
+                * cond : '<' | '>' | ('<' '>' ) | ('!' '=') | ( '<' '=') | ('>' '=') ; */
         {
             int direction = yylex();
             if (direction == LEFT || direction == RIGHT)
@@ -299,7 +311,11 @@ int RobotCommandLanguage::parse_()
                             {
                                 if (yylex() == FLOAT)
                                 {
-                                    DoTurn(direction,speed,loop,what,cond,CheckRangeFloat(yylval.fval,0,360));
+                                    double value = CheckRangeFloat(yylval.fval,0,360);
+                                    if (yylex() == EOL)
+                                    {
+                                        DoTurn(direction,speed,loop,what,cond,value);
+                                    } else return -1;
                                 } else return -1;
                             } else return -1;
                         } else return -1;
