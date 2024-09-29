@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:01:53 2024
-//  Last Modified : <240926.1949>
+//  Last Modified : <240928.0943>
 //
 //  Description	
 //
@@ -65,6 +65,8 @@ public:
     void Headlight(int onoff);
     void SendAcceleration();
     void SendOrientation();
+    void SendTemperature();
+    void SendMagnetometer();
     void ZeroAngle();
     void ZeroHeading();
     void DoTurn(int direction,int speed,int loop, int what, int cond, double value);

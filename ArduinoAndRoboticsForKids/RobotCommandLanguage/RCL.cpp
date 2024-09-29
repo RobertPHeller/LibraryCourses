@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:35:57 2024
-//  Last Modified : <240926.1632>
+//  Last Modified : <240928.2052>
 //
 //  Description	
 //
@@ -46,17 +46,50 @@ static const char rcsid[] = "@(#) : $Id$";
 
 
 #include "RCL.h"
+#ifdef __AVR__
+#include <avr/io.h>
+#include <avr/pgmspace.h>
+#elif defined(ESP8266)
+#include <pgmspace.h>
+#elif defined(__IMXRT1052__) || defined(__IMXRT1062__)
+// PROGMEM is defefind for T4 to place data in specific memory section
+#undef PROGMEM
+#define PROGMEM
+#else
+#define PROGMEM
+#endif
+#ifndef pgm_read_byte
+#define pgm_read_byte(addr) (*(const unsigned char *)(addr))
+#endif
+#ifndef pgm_read_word
+#define pgm_read_word(addr) (*(const unsigned short *)(addr))
+#endif
+#ifndef pgm_read_dword
+#define pgm_read_dword(addr) (*(const unsigned long *)(addr))
+#endif
+// Pointers are a peculiar case...typically 16-bit on AVR boards,
+// 32 bits elsewhere.  Try to accommodate both...
 
+#if !defined(__INT_MAX__) || (__INT_MAX__ > 0xFFFF)
+#define pgm_read_pointer(addr) ((void *)pgm_read_dword(addr))
+#else
+#define pgm_read_pointer(addr) ((void *)pgm_read_word(addr))
+#endif
 
+#if defined(ARDUINO_DFROBOT_ROMEO_ESP32S3)
+#define strcmp_P strcmp
+#undef pgm_read_word
+#define pgm_read_word(x) x
+#endif
 
 
 int RobotCommandLanguage::lookup_word(const char *word) const
 {
     /* *** MUST BE IN ALPHABETICAL ORDER (for binary search) *** */
     static const struct {
-        const char *w;
-        int id;
-    } reserved_words[] = {
+        const char w[16];
+        uint16_t id;
+    } reserved_words[] PROGMEM = {
         {"ACCELERATION", ACCELERATION},
         {"ANGLE", ANGLE},
         {"FRONT", FRONT},
@@ -64,6 +97,7 @@ int RobotCommandLanguage::lookup_word(const char *word) const
         {"HEADING", HEADING},
         {"HEADLIGHT", HEADLIGHT},
         {"LEFT", LEFT},
+        {"MAGNETOMETER", MAGNETOMETER},
         {"MOTOR", MOTOR},
         {"OFF", OFF},
         {"ON", ON},
@@ -72,6 +106,7 @@ int RobotCommandLanguage::lookup_word(const char *word) const
         {"REAR", REAR},
         {"REMOTE", REMOTE},
         {"RIGHT", RIGHT},
+        {"TEMPERATURE", TEMPERATURE},
         {"TILT", TILT},
         {"TURN", TURN},
         {"UNTIL", UNTIL},
@@ -85,8 +120,8 @@ int RobotCommandLanguage::lookup_word(const char *word) const
     l = 0; e = count;
     while (e > l) {
         m = (l+e)/2;
-        comp = strcmp(word,reserved_words[m].w);
-        if (comp == 0) return reserved_words[m].id;
+        comp = strcmp_P(word,reserved_words[m].w);
+        if (comp == 0) return pgm_read_word(reserved_words[m].id);
         else if (comp < 0) e = m;
         else l = m+1;
     }
@@ -323,6 +358,14 @@ int RobotCommandLanguage::parse_()
                 } else return -1;
             } else return -1;
         }
+        break;
+    case TEMPERATURE:
+        if (yylex() == EOL) SendTemperature();
+        else return -1;
+        break;
+    case MAGNETOMETER:
+        if (yylex() == EOL) SendMagnetometer();
+        else return -1;
         break;
     default: return -1;
     }

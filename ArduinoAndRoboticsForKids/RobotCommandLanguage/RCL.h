@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:28:22 2024
-//  Last Modified : <240926.1123>
+//  Last Modified : <240928.0944>
 //
 //  Description	
 //
@@ -74,7 +74,8 @@ private:
     } yylval;
     enum {INTEGER=258,FLOAT,EOL,NOTWORD,FRONT,REAR,MOTOR,GRIP,WRIST,PAN,TILT,
         REMOTE,HEADLIGHT,ON,OFF,ACCELERATION,ORIENTATION,TURN,WHILE,UNTIL,
-        ANGLE,HEADING,ZERO,LEFT,RIGHT,EQ,NE,LT,GT,LE,GE
+        ANGLE,HEADING,ZERO,LEFT,RIGHT,TEMPERATURE,MAGNETOMETER,
+        EQ,NE,LT,GT,LE,GE
     };
     inline bool IsConditional(int cond) const
     {

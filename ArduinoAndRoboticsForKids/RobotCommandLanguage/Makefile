@@ -8,7 +8,7 @@
 #  Author        : $Author$
 #  Created By    : Robert Heller
 #  Created       : Tue Sep 24 11:54:51 2024
-#  Last Modified : <240924.1608>
+#  Last Modified : <240928.2102>
 #
 #  Description	
 #
@@ -43,15 +43,18 @@
 ##############################################################################
 
 
-ARDUINOUNO = arduino:avr:uno
+BOARDSPEC = arduino:avr:uno
 
-all: build.stamp
+TARGET=build.stamp_$(subst :,_,$(BOARDSPEC))
+
+all: $(TARGET)
 
 
-build.stamp: RobotCommandLanguage.ino RCL.h RCL.cpp RobotCommands.h RobotCommands.cpp
-	arduino --verify --board $(ARDUINOUNO) -v RobotCommandLanguage.ino
-	touch build.stamp
+$(TARGET): RobotCommandLanguage.ino RCL.h RCL.cpp RobotCommands.h RobotCommands.cpp config.h
+	-rm -rf /tmp/arduino_build_*
+	arduino --verify --board $(BOARDSPEC) -v --preserve-temp-files RobotCommandLanguage.ino
+	touch $(TARGET)
 
-upload: build.stamp
-	arduino --upload --board $(ARDUINOUNO) --port /dev/ttyACM0 RobotCommandLanguage.ino
+upload: $(TARGET)
+	arduino --upload --board $(BOARDSPEC) --port /dev/ttyACM0 RobotCommandLanguage.ino
 
