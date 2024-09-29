@@ -8,7 +8,7 @@
 //  Author        : $Author$
 //  Created By    : Robert Heller
 //  Created       : Tue Sep 24 12:15:57 2024
-//  Last Modified : <240928.2048>
+//  Last Modified : <240928.2119>
 //
 //  Description	
 //
@@ -79,20 +79,20 @@ static const char rcsid[] = "@(#) : $Id$";
 #elif defined(ARDUINO_DFROBOT_ROMEO_ESP32S3)
 #define  RX_Pin 44
 #define  TX_Pin 43
-#define  Front_Pin 12 
-#define  Grip_Pin 13
-#define  M1_Pin 10
-#define  E1_Pin 9
-#define  E2_Pin 47
-#define  M2_Pin 11
-#define  Rear_Pin 14
-#define  Wrist_Pin 21
+#define  Front_Pin 8 
+#define  Grip_Pin 3
+#define  M1_Pin 13
+#define  E1_Pin 12
+#define  E2_Pin 14
+#define  M2_Pin 21
+#define  Rear_Pin 4
+#define  Wrist_Pin 5
 #define  Pan_Pin 7
 #define  Tilt_Pin 15
 #define  IR_Pin 16
 #define  Headlights_Pin 17
 
-#define  LDR_Pin 17
+#define  LDR_Pin 18
 #endif
 /* Ultrasonic Sensors */
 SRF05 FrontSensor(Front_Pin);
